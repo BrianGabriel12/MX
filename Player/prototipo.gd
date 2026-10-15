@@ -43,6 +43,17 @@ const IN_SHOOT := &"Shot"
 @export var charge_medium_time := 0.8  # tiempo presionado para nivel 2
 @export var charge_max_time := 1.8     # tiempo presionado para nivel 3
 
+@export_group("Efecto de carga")
+@export var charge_fx: Node2D            # nodo del efecto (si se llama "Carga" lo encuentra solo)
+@export var charge_anim_1 := &"Carga-1"  # se ve del nivel 2 hasta antes del nivel 3
+@export var charge_anim_2 := &"Carga-2"  # se ve en el nivel 3 (sustituye al 1)
+
+@export_group("Estela (dash y slide)")
+@export var trail_enabled := true
+@export var trail_interval := 0.04       # cada cuánto deja una copia (seg)
+@export var trail_fade_time := 0.25      # cuánto tarda cada copia en desaparecer (seg)
+@export var trail_color := Color(0.5, 0.8, 1.0, 0.6)  # color y transparencia de las copias
+
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var muzzle: Marker2D = $Shoot
@@ -59,6 +70,9 @@ var muzzle_offset_x := 0.0
 var air_boost := false   # true tras saltar desde un dash, hasta aterrizar o cambiar de dirección
 var wall_dir := 0        # lado de la pared: 1 = derecha, -1 = izquierda
 var wall_lock_left := 0.0
+var charge_fx_player: AnimationPlayer
+var charge_fx_current: StringName = &""
+var trail_timer := 0.0
 
 # true cuando ya se mantuvo la tecla lo suficiente para considerarse "modo carga"
 var charging: bool:
@@ -72,6 +86,7 @@ func _ready() -> void:
 	var tree := get_node_or_null("AnimationTree") as AnimationTree
 	if tree:
 		tree.active = false
+	_setup_charge_fx()
 
 
 func _physics_process(delta: float) -> void:
@@ -92,8 +107,10 @@ func _physics_process(delta: float) -> void:
 
 	_apply_facing()
 	_handle_shoot(delta)
+	_update_charge_fx()
 	move_and_slide()
 	_update_animation()
+	_update_trail(delta)
 
 
 # ---------------------------------------------------------------- MOVIMIENTO
@@ -302,3 +319,79 @@ func _play(next: StringName) -> void:
 	anim.play(next)
 	if keep_pos:
 		anim.seek(pos, true)
+
+
+# ------------------------------------------------------------------- EFECTOS
+
+# Efecto de carga: se busca el nodo y su AnimationPlayer, y se deja oculto
+func _setup_charge_fx() -> void:
+	if charge_fx == null:
+		charge_fx = get_node_or_null("Carga") as Node2D
+	if charge_fx == null:
+		push_warning("No encuentro el efecto de carga: instancia su escena como hijo de Prototipo y llámala 'Carga', o arrástrala al campo Charge Fx.")
+		return
+	var players := charge_fx.find_children("*", "AnimationPlayer", true, false)
+	if players.is_empty():
+		push_warning("El efecto de carga no tiene un AnimationPlayer.")
+	else:
+		charge_fx_player = players[0] as AnimationPlayer
+	charge_fx.hide()
+
+
+# Sin efecto antes del nivel 2; Carga-1 en el nivel 2; Carga-2 en el nivel 3 (el 1 deja de verse).
+# Al soltar el disparo (o al empezar dash/slide) holding_shoot pasa a false y todo se oculta.
+func _update_charge_fx() -> void:
+	if charge_fx == null:
+		return
+	var wanted: StringName = &""
+	if holding_shoot:
+		if charge >= charge_max_time:
+			wanted = charge_anim_2
+		elif charge >= charge_medium_time:
+			wanted = charge_anim_1
+	if wanted == charge_fx_current:
+		return
+	charge_fx_current = wanted
+	if wanted == &"":
+		charge_fx.hide()
+		if charge_fx_player:
+			charge_fx_player.stop()
+	else:
+		charge_fx.show()
+		if charge_fx_player and charge_fx_player.has_animation(wanted):
+			charge_fx_player.play(wanted)
+		elif charge_fx_player:
+			push_warning("El efecto de carga no tiene la animación '%s'. Revisa charge_anim_1 / charge_anim_2." % wanted)
+
+
+# Estela: durante dash y slide deja copias del sprite que se desvanecen
+func _update_trail(delta: float) -> void:
+	if not trail_enabled or (state != State.DASH and state != State.SLIDE):
+		trail_timer = 0.0
+		return
+	trail_timer -= delta
+	if trail_timer > 0.0:
+		return
+	trail_timer = trail_interval
+	_spawn_ghost()
+
+
+func _spawn_ghost() -> void:
+	var ghost := Sprite2D.new()
+	ghost.texture = sprite.texture
+	ghost.hframes = sprite.hframes
+	ghost.vframes = sprite.vframes
+	ghost.frame = sprite.frame
+	ghost.centered = sprite.centered
+	ghost.offset = sprite.offset
+	ghost.flip_h = sprite.flip_h
+	ghost.z_index = sprite.z_index
+	ghost.modulate = trail_color
+	var parent := get_parent()
+	parent.add_child(ghost)
+	parent.move_child(ghost, get_index())  # justo detrás del jugador
+	ghost.global_position = sprite.global_position
+	ghost.global_scale = sprite.global_scale
+	var tween := ghost.create_tween()
+	tween.tween_property(ghost, "modulate:a", 0.0, trail_fade_time)
+	tween.tween_callback(ghost.queue_free)

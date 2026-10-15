@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bfhq6dcpolvgx"]
+
+[ext_resource type="Script" uid="uid://bwhm6m63dl116" path="res://Enemigo/Metalls/ball.gd" id="1_0euqk"]
+[ext_resource type="Texture2D" uid="uid://dnehvobk52msf" path="res://Enemigo/Metalls/Ball-1.png" id="1_7srs1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q4ydc"]
+radius = 4.1231055
+
+[node name="Ball" type="Area2D" unique_id=669986288]
+collision_layer = 16
+collision_mask = 3
+script = ExtResource("1_0euqk")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1071833068]
+texture = ExtResource("1_7srs1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=17000311]
+shape = SubResource("CircleShape2D_q4ydc")

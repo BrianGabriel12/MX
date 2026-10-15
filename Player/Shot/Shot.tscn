@@ -92,12 +92,14 @@ size = Vector2(44, 19)
 [node name="Area2D" type="Area2D" unique_id=911960112]
 light_mask = 2
 visibility_layer = 2
+collision_layer = 8
+collision_mask = 5
 script = ExtResource("1_3hpj1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=281190377]
-scale = Vector2(0.6000415, 0.60748315)
+scale = Vector2(0.94, 0.947)
 sprite_frames = SubResource("SpriteFrames_q4ydc")
-animation = &"Shot_2"
+animation = &"Shot_3"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=608034438]
 position = Vector2(2, 0.5)
