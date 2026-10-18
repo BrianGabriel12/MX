@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dihvhdnli0qwl" path="res://Player/prototipo.gd" id="1_jumlm"]
 [ext_resource type="PackedScene" uid="uid://d3dhs5w7itll" path="res://Player/Shot/Shot.tscn" id="2_slqyf"]
 [ext_resource type="PackedScene" uid="uid://cgafhthikdgy1" path="res://Player/carga.tscn" id="4_ymksw"]
+[ext_resource type="PackedScene" uid="uid://b6c6lcjten4gd" path="res://Life/vida.tscn" id="5_v5pub"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_slqyf"]
 
@@ -1210,11 +1211,17 @@ nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_16c87")
 nodes/TimeScale/position = Vector2(160, 100)
 node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_44pry"]
+animation = &"Dead_2"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jumlm"]
 animation = &"Fall_1"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6vn3b"]
 animation = &"Fall_shot"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ocjga"]
+animation = &"Hit"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_slqyf"]
 animation = &"Idle"
@@ -1389,11 +1396,15 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_etr03"]
 states/Dash/node = SubResource("AnimationNodeBlendTree_p8mo8")
 states/Dash/position = Vector2(324, -64)
+states/Dead_2/node = SubResource("AnimationNodeAnimation_44pry")
+states/Dead_2/position = Vector2(51.56897, -64)
 states/End/position = Vector2(950, 70)
 states/Fall_1/node = SubResource("AnimationNodeAnimation_jumlm")
 states/Fall_1/position = Vector2(324, 242)
 states/Fall_shot/node = SubResource("AnimationNodeAnimation_6vn3b")
 states/Fall_shot/position = Vector2(720.569, 51)
+states/Hit/node = SubResource("AnimationNodeAnimation_ocjga")
+states/Hit/position = Vector2(3.5689697, -4)
 states/Idle/node = SubResource("AnimationNodeAnimation_slqyf")
 states/Idle/position = Vector2(324, 51)
 states/Jump/node = SubResource("AnimationNodeAnimation_ymksw")
@@ -1418,7 +1429,7 @@ states/Wall_Slide_Jump/position = Vector2(930.569, -120)
 states/up/node = SubResource("AnimationNodeAnimation_kyifp")
 states/up/position = Vector2(228.56897, 139)
 transitions = ["Run", "Jump", SubResource("AnimationNodeStateMachineTransition_p8mo8"), "Jump", "Fall_1", SubResource("AnimationNodeStateMachineTransition_p82rt"), "Jump", "Run", SubResource("AnimationNodeStateMachineTransition_6vn3b"), "Run", "Fall_1", SubResource("AnimationNodeStateMachineTransition_ht2e5"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_f7ytb"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_16c87"), "Fall_1", "Idle", SubResource("AnimationNodeStateMachineTransition_ehwie"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_wc08y"), "Idle", "Fall_1", SubResource("AnimationNodeStateMachineTransition_fvdqe"), "Idle", "Dash", SubResource("AnimationNodeStateMachineTransition_kyifp"), "Dash", "Idle", SubResource("AnimationNodeStateMachineTransition_44pry"), "Idle", "Slide", SubResource("AnimationNodeStateMachineTransition_ocjga"), "Run", "Dash", SubResource("AnimationNodeStateMachineTransition_875v1"), "Run", "Slide", SubResource("AnimationNodeStateMachineTransition_3f6em"), "Slide", "Idle", SubResource("AnimationNodeStateMachineTransition_0ebuc"), "Slide", "Run", SubResource("AnimationNodeStateMachineTransition_wd21q"), "Dash", "Run", SubResource("AnimationNodeStateMachineTransition_jumlm"), "Idle", "Shot", SubResource("AnimationNodeStateMachineTransition_slqyf"), "Idle", "Run_Shot", SubResource("AnimationNodeStateMachineTransition_ymksw"), "Run", "Run_Shot", SubResource("AnimationNodeStateMachineTransition_v5pub"), "Run_Shot", "Idle", SubResource("AnimationNodeStateMachineTransition_k2fqy"), "Shot", "Run_Shot", SubResource("AnimationNodeStateMachineTransition_vyxjh"), "Shot", "Idle", SubResource("AnimationNodeStateMachineTransition_bkaak"), "Shot", "Run", SubResource("AnimationNodeStateMachineTransition_6lx3p"), "Shot", "Jump", SubResource("AnimationNodeStateMachineTransition_0hwsq"), "Run_Shot", "Jump", SubResource("AnimationNodeStateMachineTransition_0c66m"), "Run_Shot", "Run", SubResource("AnimationNodeStateMachineTransition_yf0pt"), "Run_Shot", "Slide", SubResource("AnimationNodeStateMachineTransition_wxodk"), "Run_Shot", "Shot_Cargin", SubResource("AnimationNodeStateMachineTransition_ssuxc"), "Idle", "Shot_Cargin", SubResource("AnimationNodeStateMachineTransition_mgx6t"), "Shot_Cargin", "Run_Shot", SubResource("AnimationNodeStateMachineTransition_hkv4i"), "Shot_Cargin", "Shot", SubResource("AnimationNodeStateMachineTransition_wpl3u"), "Idle", "Jump_shot", SubResource("AnimationNodeStateMachineTransition_foeg0"), "Jump_shot", "Idle", SubResource("AnimationNodeStateMachineTransition_e0qtn"), "Jump_shot", "Run", SubResource("AnimationNodeStateMachineTransition_irnvd"), "Jump_shot", "Run_Shot", SubResource("AnimationNodeStateMachineTransition_n3wgj"), "Jump_shot", "Shot_Cargin", SubResource("AnimationNodeStateMachineTransition_islcd"), "Run_Shot", "Jump_shot", SubResource("AnimationNodeStateMachineTransition_v2aau"), "Jump_shot", "Fall_1", SubResource("AnimationNodeStateMachineTransition_dtf8k"), "Jump_shot", "Fall_shot", SubResource("AnimationNodeStateMachineTransition_2fbmi"), "Fall_1", "Fall_shot", SubResource("AnimationNodeStateMachineTransition_jgq1a"), "Jump", "Fall_shot", SubResource("AnimationNodeStateMachineTransition_ckaic"), "Fall_shot", "Fall_1", SubResource("AnimationNodeStateMachineTransition_kr174"), "Wall_Slide", "Wall_Slide_Jump", SubResource("AnimationNodeStateMachineTransition_3368u"), "Jump_shot", "Wall_Slide", SubResource("AnimationNodeStateMachineTransition_g87m4"), "Jump", "Wall_Slide", SubResource("AnimationNodeStateMachineTransition_4xpbt"), "Wall_Slide_Jump", "Fall_1", SubResource("AnimationNodeStateMachineTransition_ysp67"), "Wall_Slide_Jump", "Fall_shot", SubResource("AnimationNodeStateMachineTransition_kaq77"), "Wall_Slide_Jump", "Run_Shot", SubResource("AnimationNodeStateMachineTransition_vcm0n"), "Wall_Slide_Jump", "Idle", SubResource("AnimationNodeStateMachineTransition_g713x"), "Wall_Slide_Jump", "Run", SubResource("AnimationNodeStateMachineTransition_ml6ks"), "Wall_Slide", "Fall_shot", SubResource("AnimationNodeStateMachineTransition_qj8rs"), "Wall_Slide", "Fall_1", SubResource("AnimationNodeStateMachineTransition_dq5o8"), "Jump", "up", SubResource("AnimationNodeStateMachineTransition_mb17i"), "up", "Idle", SubResource("AnimationNodeStateMachineTransition_30b88"), "Idle", "up", SubResource("AnimationNodeStateMachineTransition_68ss5")]
-graph_offset = Vector2(117.56897, 21)
+graph_offset = Vector2(-153.43103, -118)
 
 [node name="Prototipo" type="CharacterBody2D" unique_id=1333289074 groups=["Player"]]
 collision_layer = 2
@@ -1429,22 +1440,26 @@ bullet_scene = ExtResource("2_slqyf")
 shoot_cooldown = 0.2
 charge_medium_time = 1.0
 charge_max_time = 2.0
-trail_fade_time = 0.5
+restart_delay = 3.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=72320197 groups=["Player"]]
 position = Vector2(1, -10)
 texture = ExtResource("1_6j1wr")
 hframes = 12
 vframes = 11
+metadata/_edit_lock_ = true
 
 [node name="Carga" parent="." unique_id=1967932461 instance=ExtResource("4_ymksw")]
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1059561641]
 position = Vector2(0, -5)
 shape = SubResource("CapsuleShape2D_slqyf")
+metadata/_edit_lock_ = true
 
 [node name="Shoot" type="Marker2D" parent="." unique_id=1194130452]
 position = Vector2(13, -15)
+metadata/_edit_lock_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=606554117]
 libraries/ = SubResource("AnimationLibrary_slqyf")
@@ -1454,3 +1469,5 @@ tree_root = SubResource("AnimationNodeStateMachine_etr03")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Dash/TimeScale/scale = 2.4299999999999997
 parameters/Slide/TimeScale/scale = 1.4500000000000028
+
+[node name="Vida" parent="." unique_id=594032075 instance=ExtResource("5_v5pub")]

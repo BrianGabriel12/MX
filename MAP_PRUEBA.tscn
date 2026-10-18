@@ -3,6 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://c5lhp04dqkygw" path="res://test_tileset.png" id="1_ay2at"]
 [ext_resource type="PackedScene" uid="uid://b0rik8ax0tcg" path="res://Player/prototipo.tscn" id="2_pjck6"]
 [ext_resource type="PackedScene" uid="uid://bp6le54eflt2i" path="res://Enemigo/Metalls/Metalls.tscn" id="3_t0j21"]
+[ext_resource type="PackedScene" uid="uid://b0c1bdc4jo3ss" path="res://Life/Heart.tscn" id="4_w8o1x"]
+[ext_resource type="PackedScene" uid="uid://cebikscycf5ln" path="res://Life/Life_Max.tscn" id="5_nmytl"]
+[ext_resource type="PackedScene" uid="uid://bn0lngk5a86f3" path="res://Life/life_min.tscn" id="6_ceikv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pjck6"]
 texture = ExtResource("1_ay2at")
@@ -373,4 +376,19 @@ tile_set = SubResource("TileSet_etr03")
 use_kinematic_bodies = true
 
 [node name="Metalls" parent="." unique_id=841131743 instance=ExtResource("3_t0j21")]
-position = Vector2(484, -47)
+position = Vector2(584, -103)
+
+[node name="Hearrt" parent="." unique_id=487236260 instance=ExtResource("4_w8o1x")]
+position = Vector2(-67, -259)
+
+[node name="Life_Max" parent="." unique_id=1215485606 instance=ExtResource("5_nmytl")]
+position = Vector2(-12, -262)
+
+[node name="Life_Min" parent="." unique_id=1677047720 instance=ExtResource("6_ceikv")]
+position = Vector2(38, -261)
+
+[node name="Hearrt2" parent="." unique_id=1975079956 instance=ExtResource("4_w8o1x")]
+position = Vector2(-39, -259)
+
+[node name="Hearrt3" parent="." unique_id=876236842 instance=ExtResource("4_w8o1x")]
+position = Vector2(6, -255)

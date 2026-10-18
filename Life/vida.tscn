@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://b6c6lcjten4gd"]
+
+[ext_resource type="Script" uid="uid://behn735xjgsi" path="res://Life/vida.gd" id="1_adbdv"]
+[ext_resource type="Texture2D" uid="uid://cyqd2kexr1vvc" path="res://Life/Top.png" id="1_c71fs"]
+[ext_resource type="Texture2D" uid="uid://bpilm5da63tug" path="res://Life/Mid.png" id="2_adbdv"]
+[ext_resource type="Texture2D" uid="uid://b8mnp5hva11rm" path="res://Life/Down.png" id="3_3h86s"]
+[ext_resource type="Texture2D" uid="uid://cjkwb5x85emtm" path="res://Life/Life.png" id="5_3h86s"]
+
+[node name="Vida" type="CanvasLayer" unique_id=594032075]
+layer = 10
+script = ExtResource("1_adbdv")
+
+[node name="Marco" type="Node2D" parent="." unique_id=1797228035]
+position = Vector2(19, -18)
+scale = Vector2(-0.13, -0.13)
+
+[node name="Top" type="Sprite2D" parent="Marco" unique_id=714358033]
+position = Vector2(-20, 20)
+texture = ExtResource("1_c71fs")
+
+[node name="Mid" type="Sprite2D" parent="Marco" unique_id=2077530798]
+position = Vector2(-20, 20)
+texture = ExtResource("2_adbdv")
+
+[node name="Down" type="Sprite2D" parent="Marco" unique_id=1635760477]
+position = Vector2(-20, 20)
+texture = ExtResource("3_3h86s")
+
+[node name="Life" type="Sprite2D" parent="Marco" unique_id=247631280]
+position = Vector2(-20, 19)
+texture = ExtResource("5_3h86s")

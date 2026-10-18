@@ -4,7 +4,10 @@ extends CharacterBody2D
 ## Los sprites miran hacia la DERECHA (se voltean con flip_h al ir a la izquierda),
 ## excepto Wall_Slide, que se dibujó mirando a la IZQUIERDA (ver wall_slide_sprite_faces_left).
 
-enum State { NORMAL, DASH, SLIDE, WALL_SLIDE }  # más adelante: HIT, DEAD
+enum State { NORMAL, DASH, SLIDE, WALL_SLIDE, HIT, DEAD }
+
+signal health_changed(hp: int, max_hp: int)  # el HUD de vida se conecta a esta señal
+signal died
 
 # Nombres de tus acciones del Mapa de entrada (cámbialos aquí si los renombras)
 const IN_LEFT := &"Izq"
@@ -43,6 +46,16 @@ const IN_SHOOT := &"Shot"
 @export var charge_medium_time := 0.8  # tiempo presionado para nivel 2
 @export var charge_max_time := 1.8     # tiempo presionado para nivel 3
 
+@export_group("Vida")
+@export var max_hp_start := 25         # vida máxima con la que empieza
+@export var max_hp_limit := 100        # límite al que puede expandirse con items
+@export var hit_knockback := 80.0      # retroceso al recibir daño (0 = sin retroceso)
+@export var invincible_time := 1.0     # invulnerabilidad tras recibir daño (parpadea)
+@export var hit_anim := &"Hit"
+@export var dead_anim := &"Dead_2"
+@export var restart_delay := 1.5       # segundos tras morir antes de reiniciar el nivel (negativo = no reinicia)
+@export var debug_log := false         # imprime la vida en Salida cada vez que cambia
+
 @export_group("Efecto de carga")
 @export var charge_fx: Node2D            # nodo del efecto (si se llama "Carga" lo encuentra solo)
 @export var charge_anim_1 := &"Carga-1"  # se ve del nivel 2 hasta antes del nivel 3
@@ -73,6 +86,9 @@ var wall_lock_left := 0.0
 var charge_fx_player: AnimationPlayer
 var charge_fx_current: StringName = &""
 var trail_timer := 0.0
+var max_hp := 25
+var hp := 25
+var invincible_left := 0.0
 
 # true cuando ya se mantuvo la tecla lo suficiente para considerarse "modo carga"
 var charging: bool:
@@ -87,12 +103,16 @@ func _ready() -> void:
 	if tree:
 		tree.active = false
 	_setup_charge_fx()
+	max_hp = clampi(max_hp_start, 1, max_hp_limit)
+	hp = max_hp
+	_emit_health.call_deferred()  # diferido: así el HUD ya está conectado
 
 
 func _physics_process(delta: float) -> void:
 	cooldown_left = maxf(cooldown_left - delta, 0.0)
 	pose_left = maxf(pose_left - delta, 0.0)
 	wall_lock_left = maxf(wall_lock_left - delta, 0.0)
+	invincible_left = maxf(invincible_left - delta, 0.0)
 	move_dir = Input.get_axis(IN_LEFT, IN_RIGHT)
 
 	match state:
@@ -104,6 +124,10 @@ func _physics_process(delta: float) -> void:
 			_state_burst(slide_speed, delta)
 		State.WALL_SLIDE:
 			_state_wall_slide(delta)
+		State.HIT:
+			_state_hit(delta)
+		State.DEAD:
+			_state_dead(delta)
 
 	_apply_facing()
 	_handle_shoot(delta)
@@ -111,6 +135,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_update_animation()
 	_update_trail(delta)
+	_update_blink()
 
 
 # ---------------------------------------------------------------- MOVIMIENTO
@@ -275,6 +300,10 @@ func _update_animation() -> void:
 			next = &"Slide"
 		State.WALL_SLIDE:
 			next = &"Wall_Slide"
+		State.HIT:
+			next = hit_anim
+		State.DEAD:
+			next = dead_anim
 		_:
 			if not is_on_floor():
 				if velocity.y < 0.0:
@@ -395,3 +424,95 @@ func _spawn_ghost() -> void:
 	var tween := ghost.create_tween()
 	tween.tween_property(ghost, "modulate:a", 0.0, trail_fade_time)
 	tween.tween_callback(ghost.queue_free)
+
+
+
+# ---------------------------------------------------------------------- VIDA
+
+# Lo llaman las balas y los enemigos: body.take_damage(cantidad)
+func take_damage(amount: int) -> void:
+	if state == State.DEAD or invincible_left > 0.0 or amount <= 0:
+		return
+	hp = maxi(hp - amount, 0)
+	_emit_health()
+	if hp == 0:
+		_die()  # con la vida en 0 no se reproduce Hit: pasa directo a la muerte
+	else:
+		_start_hit()
+
+
+func _start_hit() -> void:
+	# Hit tiene prioridad sobre cualquier otro estado: corta dash, slide, pared, carga...
+	state = State.HIT
+	state_time_left = anim.get_animation(hit_anim).length if anim.has_animation(hit_anim) else 0.4
+	invincible_left = invincible_time
+	air_boost = false
+	wall_lock_left = 0.0
+	holding_shoot = false
+	charge = 0.0
+	pose_left = 0.0
+	velocity = Vector2(-facing * hit_knockback, 0.0)  # retrocede (al lado contrario de donde mira)
+
+
+func _state_hit(delta: float) -> void:
+	velocity.x = move_toward(velocity.x, 0.0, hit_knockback * 4.0 * delta)  # el retroceso se frena solo
+	_apply_gravity(delta)
+	state_time_left -= delta
+	if state_time_left <= 0.0:
+		state = State.NORMAL
+
+
+func _die() -> void:
+	state = State.DEAD
+	velocity.x = 0.0
+	holding_shoot = false
+	charge = 0.0
+	pose_left = 0.0
+	invincible_left = 0.0
+	died.emit()
+	if restart_delay >= 0.0:
+		get_tree().create_timer(restart_delay).timeout.connect(_restart_level)
+
+
+func _restart_level() -> void:
+	get_tree().reload_current_scene()
+
+
+func _state_dead(delta: float) -> void:
+	velocity.x = 0.0
+	_apply_gravity(delta)  # si muere en el aire, cae y ahí se queda
+
+
+# Parpadeo mientras dura la invulnerabilidad
+func _update_blink() -> void:
+	var blink := invincible_left > 0.0 and int(invincible_left * 20.0) % 2 == 0
+	sprite.modulate.a = 0.35 if blink else 1.0
+
+
+func _emit_health() -> void:
+	if debug_log:
+		print("Vida: ", hp, "/", max_hp)
+	health_changed.emit(hp, max_hp)
+
+
+
+# ------------------------------------------------------------ ITEMS DE VIDA
+
+# Life_Min / Life_Max: curan (sin pasar de la vida máxima). Los llama item_vida.gd
+func heal(amount: int) -> bool:
+	if state == State.DEAD or amount <= 0:
+		return false
+	hp = mini(hp + amount, max_hp)
+	_emit_health()
+	return true
+
+
+# Heart: expande la barra hasta max_hp_limit y llena esa parte nueva
+func increase_max_hp(amount: int) -> bool:
+	var added := mini(amount, max_hp_limit - max_hp)
+	if state == State.DEAD or added <= 0:
+		return false  # ya está en el límite (o muerto): el item no se consume
+	max_hp += added
+	hp += added
+	_emit_health()
+	return true
