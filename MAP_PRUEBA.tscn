@@ -385,7 +385,7 @@ position = Vector2(-67, -259)
 position = Vector2(-12, -262)
 
 [node name="Life_Min" parent="." unique_id=1677047720 instance=ExtResource("6_ceikv")]
-position = Vector2(38, -261)
+position = Vector2(53, -256)
 
 [node name="Hearrt2" parent="." unique_id=1975079956 instance=ExtResource("4_w8o1x")]
 position = Vector2(-39, -259)
