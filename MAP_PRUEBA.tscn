@@ -359,16 +359,16 @@ texture = ExtResource("1_ay2at")
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ceikv"]
 texture = ExtResource("2_nmytl")
 0:0/0 = 0
-0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -3.2374563, -8, -2.877739)
+0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -8, 8, 8, -8, 8)
 0:0/0/custom_data_1 = true
 1:0/0 = 0
-1:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -3.2374563, -8, -2.877739)
+1:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -8, 8, 8, -8, 8)
 1:0/0/custom_data_1 = true
 0:2/0 = 0
-0:2/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:2/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -8, 8, 8, -8, 8)
 0:2/0/custom_data_0 = true
 1:2/0 = 0
-1:2/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:2/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -8, 8, 8, -8, 8)
 1:2/0/custom_data_0 = true
 
 [sub_resource type="TileSet" id="TileSet_etr03"]

@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://blhur450n85b1"]
+
+[ext_resource type="Texture2D" uid="uid://bg7cyfsvm232j" path="res://addons/pixel_ui_scifi/themes/cyan/menu_hover.png" id="1_tg4cr"]
+[ext_resource type="Texture2D" uid="uid://sba4hpdf6sd5" path="res://addons/pixel_ui_scifi/themes/cyan/scroll_grabber_pressed.png" id="2_0qrqu"]
+[ext_resource type="Texture2D" uid="uid://dpiy0k568eniu" path="res://addons/pixel_ui_scifi/themes/cyan/slider.png" id="3_mx0kw"]
+[ext_resource type="Texture2D" uid="uid://cpyb5j66admek" path="res://addons/pixel_ui_scifi/themes/cyan/panel.png" id="4_w4oxd"]
+[ext_resource type="Texture2D" uid="uid://bk47ghp6two02" path="res://Menu/Title-sp.png" id="5_w4oxd"]
+[ext_resource type="FontFile" uid="uid://rvajjjg7y38l" path="res://addons/pixel_ui_scifi/font/pixel_ui_scifi_font.fnt" id="6_fsbdh"]
+
+[node name="Menu" type="CanvasLayer" unique_id=530428050]
+
+[node name="Fondo" type="Node" parent="." unique_id=1246025365]
+
+[node name="Sprite2D" type="Sprite2D" parent="Fondo" unique_id=1977338648]
+position = Vector2(576.00006, 325.4583)
+scale = Vector2(144, 81.36458)
+texture = ExtResource("1_tg4cr")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Fondo" unique_id=655428501]
+modulate = Color(0.84947944, 0.84947944, 0.84947944, 0.7764706)
+position = Vector2(576, 330)
+scale = Vector2(190.33334, 107.333336)
+texture = ExtResource("2_0qrqu")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Fondo" unique_id=1887766964]
+position = Vector2(574.50006, 628.25)
+scale = Vector2(143.62502, 10.125)
+texture = ExtResource("3_mx0kw")
+
+[node name="Esquinas" type="Node" parent="." unique_id=1272327500]
+
+[node name="Sprite2D4" type="Sprite2D" parent="Esquinas" unique_id=18427737]
+position = Vector2(15.750001, 15.750001)
+scale = Vector2(1.9062501, 1.9062501)
+texture = ExtResource("4_w4oxd")
+
+[node name="Sprite2D5" type="Sprite2D" parent="Esquinas" unique_id=648936462]
+position = Vector2(1137, 15)
+scale = Vector2(1.9062501, 1.9062501)
+texture = ExtResource("4_w4oxd")
+flip_h = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1842416566]
+position = Vector2(862.00006, 144)
+scale = Vector2(5.3471227, 3.3125)
+texture = ExtResource("5_w4oxd")
+
+[node name="Control" type="Control" parent="." unique_id=903608576]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 12.0
+offset_top = -3.0
+offset_right = 1165.0
+offset_bottom = 652.0
+metadata/_edit_lock_ = true
+
+[node name="TextEdit" type="TextEdit" parent="Control" unique_id=296246162]
+self_modulate = Color(1, 1, 1, 0)
+top_level = true
+layout_mode = 0
+offset_left = 667.0
+offset_top = 135.0
+offset_right = 741.0
+offset_bottom = 170.0
+offset_transform_enabled = true
+offset_transform_scale = Vector2(1.635, 1.635)
+theme_override_fonts/font = ExtResource("6_fsbdh")
+text = "INICIO"

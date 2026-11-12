@@ -732,6 +732,57 @@ tracks/3/keys = {
 "values": [16, 17, 18, 19, 20, 21]
 }
 
+[sub_resource type="Animation" id="Animation_3onha"]
+resource_name = "Punch-Jump"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_jfctk")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [11]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [24]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [105, 106]
+}
+
 [sub_resource type="Animation" id="Animation_1e23o"]
 resource_name = "Punch-Run"
 length = 1.3
@@ -1253,6 +1304,98 @@ tracks/3/keys = {
 "values": [138, 139]
 }
 
+[sub_resource type="Animation" id="Animation_7tu7n"]
+resource_name = "Wall-Jump-Punch"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_jfctk")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [11]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [24]
+}
+
+[sub_resource type="Animation" id="Animation_5dsac"]
+resource_name = "Wall-Jump-Punch-2"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_jfctk")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [11]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [24]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [149]
+}
+
 [sub_resource type="Animation" id="Animation_hpjfl"]
 resource_name = "Wall-Jump-Shot"
 length = 0.3
@@ -1425,6 +1568,7 @@ _data = {
 &"Misil-2": SubResource("Animation_avh21"),
 &"Misil-3": SubResource("Animation_urw2t"),
 &"Punch-Idle-back": SubResource("Animation_mps2l"),
+&"Punch-Jump": SubResource("Animation_3onha"),
 &"Punch-Run": SubResource("Animation_1e23o"),
 &"Punch-Run-2": SubResource("Animation_qipq0"),
 &"Punch-Run-Back": SubResource("Animation_20fr8"),
@@ -1435,6 +1579,8 @@ _data = {
 &"Shot": SubResource("Animation_qtxks"),
 &"Star": SubResource("Animation_y7fsc"),
 &"Wall-Jump": SubResource("Animation_1nrnt"),
+&"Wall-Jump-Punch": SubResource("Animation_7tu7n"),
+&"Wall-Jump-Punch-2": SubResource("Animation_5dsac"),
 &"Wall-Jump-Shot": SubResource("Animation_hpjfl"),
 &"Wall-Slide": SubResource("Animation_k4bpa"),
 &"Wall-Slide-Shot": SubResource("Animation_xyqrs")
@@ -1442,6 +1588,12 @@ _data = {
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j2vjt"]
 animation = &"Dash"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xxad6"]
+animation = &"Fall-Punch-Back"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1nrnt"]
+animation = &"Fall-Punch"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ayf8e"]
 animation = &"Fall-Shot"
@@ -1460,6 +1612,24 @@ animation = &"Jump-Shot"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_urw2t"]
 animation = &"Jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_k4bpa"]
+animation = &"Punch-Idle-back"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_g30u1"]
+animation = &"Punch-Jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6jd68"]
+animation = &"Punch-Run-2"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5smo6"]
+animation = &"Punch-Run-Back"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hpjfl"]
+animation = &"Punch-Run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xyqrs"]
+animation = &"Punch-idle"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mps2l"]
 animation = &"Run-Shot"
@@ -1592,6 +1762,10 @@ states/Dash/position = Vector2(697, 19)
 states/End/position = Vector2(1031, 94)
 states/Fall/node = SubResource("AnimationNodeAnimation_avh21")
 states/Fall/position = Vector2(362, 226)
+states/Fall-Punch/node = SubResource("AnimationNodeAnimation_1nrnt")
+states/Fall-Punch/position = Vector2(237, 394)
+states/Fall-Punch-Back/node = SubResource("AnimationNodeAnimation_xxad6")
+states/Fall-Punch-Back/position = Vector2(417, 394)
 states/Fall-Shot/node = SubResource("AnimationNodeAnimation_ayf8e")
 states/Fall-Shot/position = Vector2(237, 226)
 states/Hit/node = SubResource("AnimationNodeAnimation_qtxks")
@@ -1602,6 +1776,18 @@ states/Jump/node = SubResource("AnimationNodeAnimation_urw2t")
 states/Jump/position = Vector2(552, 226)
 states/Jump-Shot/node = SubResource("AnimationNodeAnimation_y7fsc")
 states/Jump-Shot/position = Vector2(697, 226)
+states/Punch-Idle-back/node = SubResource("AnimationNodeAnimation_k4bpa")
+states/Punch-Idle-back/position = Vector2(417, 307)
+states/Punch-Jump/node = SubResource("AnimationNodeAnimation_g30u1")
+states/Punch-Jump/position = Vector2(84, 394)
+states/Punch-Run/node = SubResource("AnimationNodeAnimation_hpjfl")
+states/Punch-Run/position = Vector2(610, 312)
+states/Punch-Run-2/node = SubResource("AnimationNodeAnimation_6jd68")
+states/Punch-Run-2/position = Vector2(788, 312)
+states/Punch-Run-Back/node = SubResource("AnimationNodeAnimation_5smo6")
+states/Punch-Run-Back/position = Vector2(610, 394)
+states/Punch-idle/node = SubResource("AnimationNodeAnimation_xyqrs")
+states/Punch-idle/position = Vector2(237, 307)
 states/Run/node = SubResource("AnimationNodeAnimation_ltvlg")
 states/Run/position = Vector2(552, 100)
 states/Run-Shot/node = SubResource("AnimationNodeAnimation_mps2l")
@@ -1618,7 +1804,7 @@ states/Wall-Slide/position = Vector2(864, 111)
 states/Wall-Slide-Shot/node = SubResource("AnimationNodeAnimation_6u1x7")
 states/Wall-Slide-Shot/position = Vector2(864, 212)
 transitions = ["Idle", "Run", SubResource("AnimationNodeStateMachineTransition_qeddo"), "Run", "Jump", SubResource("AnimationNodeStateMachineTransition_0futh"), "Run", "Fall", SubResource("AnimationNodeStateMachineTransition_qipq0"), "Jump", "Fall", SubResource("AnimationNodeStateMachineTransition_20fr8"), "Run", "Run-Shot", SubResource("AnimationNodeStateMachineTransition_18drw"), "Run-Shot", "Jump", SubResource("AnimationNodeStateMachineTransition_3onha"), "Run-Shot", "Fall", SubResource("AnimationNodeStateMachineTransition_7tu7n"), "Fall", "Fall-Shot", SubResource("AnimationNodeStateMachineTransition_5dsac"), "Fall", "Idle", SubResource("AnimationNodeStateMachineTransition_g30u1"), "Fall-Shot", "Idle", SubResource("AnimationNodeStateMachineTransition_4n4t1"), "Start", "Star", SubResource("AnimationNodeStateMachineTransition_00l3d"), "Star", "Idle", SubResource("AnimationNodeStateMachineTransition_x7tgu"), "Jump", "Jump-Shot", SubResource("AnimationNodeStateMachineTransition_qtxks"), "Run", "Jump-Shot", SubResource("AnimationNodeStateMachineTransition_j2vjt"), "Run-Shot", "Jump-Shot", SubResource("AnimationNodeStateMachineTransition_nxbjh"), "Jump-Shot", "Fall", SubResource("AnimationNodeStateMachineTransition_e5ml2"), "Jump-Shot", "Fall-Shot", SubResource("AnimationNodeStateMachineTransition_6u1x7"), "Idle", "Hit", SubResource("AnimationNodeStateMachineTransition_w8ni7"), "Run", "Hit", SubResource("AnimationNodeStateMachineTransition_xxad6"), "Run-Shot", "Hit", SubResource("AnimationNodeStateMachineTransition_1nrnt"), "Jump", "Hit", SubResource("AnimationNodeStateMachineTransition_k4bpa"), "Jump-Shot", "Hit", SubResource("AnimationNodeStateMachineTransition_6jd68"), "Fall", "Hit", SubResource("AnimationNodeStateMachineTransition_5smo6"), "Fall-Shot", "Hit", SubResource("AnimationNodeStateMachineTransition_hpjfl"), "Idle", "Dash", SubResource("AnimationNodeStateMachineTransition_xyqrs"), "Run", "Dash", SubResource("AnimationNodeStateMachineTransition_lctwa"), "Dash", "Idle", SubResource("AnimationNodeStateMachineTransition_ayf8e"), "Dash", "Run", SubResource("AnimationNodeStateMachineTransition_avh21"), "Dash", "Run-Shot", SubResource("AnimationNodeStateMachineTransition_urw2t"), "Run-Shot", "Dash", SubResource("AnimationNodeStateMachineTransition_mps2l"), "Jump", "Wall-Slide", SubResource("AnimationNodeStateMachineTransition_1e23o"), "Wall-Slide", "Wall-Jump", SubResource("AnimationNodeStateMachineTransition_2eq5g"), "Wall-Jump", "Wall-Slide", SubResource("AnimationNodeStateMachineTransition_vd111"), "Wall-Jump", "Jump", SubResource("AnimationNodeStateMachineTransition_8xjen"), "Wall-Jump", "Fall", SubResource("AnimationNodeStateMachineTransition_liwy6"), "Jump-Shot", "Wall-Slide", SubResource("AnimationNodeStateMachineTransition_ndu7o"), "Wall-Slide", "Wall-Slide-Shot", SubResource("AnimationNodeStateMachineTransition_uxrhb"), "Wall-Slide-Shot", "Wall-Jump", SubResource("AnimationNodeStateMachineTransition_od0bs"), "Wall-Slide-Shot", "Wall-Jump-Shot", SubResource("AnimationNodeStateMachineTransition_fvj4x"), "Wall-Jump", "Wall-Jump-Shot", SubResource("AnimationNodeStateMachineTransition_0bm74"), "Wall-Slide", "Wall-Jump-Shot", SubResource("AnimationNodeStateMachineTransition_2ydvy"), "Wall-Jump-Shot", "Wall-Slide", SubResource("AnimationNodeStateMachineTransition_og3wv"), "Wall-Slide-Shot", "Wall-Slide", SubResource("AnimationNodeStateMachineTransition_i7o0o"), "Wall-Slide-Shot", "Jump", SubResource("AnimationNodeStateMachineTransition_jfctk"), "Wall-Slide-Shot", "Jump-Shot", SubResource("AnimationNodeStateMachineTransition_ltvlg"), "Wall-Jump", "Jump-Shot", SubResource("AnimationNodeStateMachineTransition_y7fsc"), "Wall-Jump-Shot", "Jump", SubResource("AnimationNodeStateMachineTransition_wmie3"), "Wall-Jump-Shot", "Jump-Shot", SubResource("AnimationNodeStateMachineTransition_5m51w")]
-graph_offset = Vector2(238, -78)
+graph_offset = Vector2(-139, 34)
 
 [node name="Ville" type="CharacterBody2D" unique_id=326363240]
 

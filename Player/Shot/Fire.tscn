@@ -111,7 +111,10 @@ _data = {
 &"RESET": SubResource("Animation_uvmii")
 }
 
-[node name="Fire" type="Node2D" unique_id=329194054]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ke0nw"]
+size = Vector2(11, 23)
+
+[node name="Fire" type="Area2D" unique_id=196621259]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1266922783]
 libraries/ = SubResource("AnimationLibrary_x7wo3")
@@ -119,3 +122,10 @@ libraries/ = SubResource("AnimationLibrary_x7wo3")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2023909476]
 texture = ExtResource("1_ba8nk")
 hframes = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1331889709]
+light_mask = 4
+visibility_layer = 0
+position = Vector2(0.5, 1.5)
+shape = SubResource("RectangleShape2D_ke0nw")
+debug_color = Color(0.6569388, 0, 0.1868738, 0.41960785)
